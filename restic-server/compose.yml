@@ -1,0 +1,17 @@
+---
+name: restic
+services:
+  server:
+    image: "restic/rest-server:latest"
+    restart: always
+    user: 11385:11385
+    ports:
+      - "8000:8000"
+    volumes:
+      - "certs_titan:/certs:ro"
+      - "/srv/backup/restic:/data:Z"
+    environment:
+      - "OPTIONS=--append-only --private-repos --tls --tls-cert=/certs/fullchain.pem --tls-key=/certs/privkey.pem"
+volumes:
+  certs_titan:
+    external: true
