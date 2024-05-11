@@ -1,0 +1,32 @@
+---
+version: '3.7'
+services:
+  openhab:
+    image: "openhab/openhab:latest"
+    restart: always
+    ports:
+      # - 5007:5007 # Language server
+      # - 8080:8080 # HTTP
+      - 127.0.0.0:8101:8101 # Console
+      - 127.0.0.1:8444:8444 # HTTPS
+      # - 8444:8444 # HTTPS
+      # - 9123:9123 # Homekit
+      # - 9124:9124 # Homekit
+    devices:
+      - "/dev/zwave:/dev/ttyACM0"
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - "/etc/timezone:/etc/timezone:ro"
+      - "java:/openhab/.java"
+      - "/opt/openhab/addons:/openhab/addons:Z"
+      - "/opt/openhab/conf:/openhab/conf:Z"
+      - "/opt/openhab/userdata:/openhab/userdata:Z"
+    environment:
+      # OPENHAB_HTTP_ADDRESS: "127.0.0.1"
+      OPENHAB_HTTP_PORT: "8080"
+      # OPENHAB_HTTPS_ADDRESS: "127.0.0.1"
+      OPENHAB_HTTPS_PORT: "8444"
+      EXTRA_JAVA_OPTS: "-Duser.timezone=America/Chicago"
+volumes:
+  java:
+    driver: local
