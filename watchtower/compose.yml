@@ -3,7 +3,7 @@ name: watchtower
 services:
   watchtower:
     image: containrrr/watchtower
-    command: ["--cleanup", "--tlsverify", "--interval=3600"]
+    command: ["--cleanup", "--tlsverify", "--interval=3600", "--api-version=1.52"]
     restart: always
     userns_mode: host
     cap_drop: [ALL]
